@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Presentation", "Eficaz-WebA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{28FB1C8E-01E3-4426-8072-FA90AB973DB9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{4703A7FA-E1B0-4060-B819-D2335A3D5A24}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{28FB1C8E-01E3-4426-8072-FA90AB973DB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28FB1C8E-01E3-4426-8072-FA90AB973DB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28FB1C8E-01E3-4426-8072-FA90AB973DB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4703A7FA-E1B0-4060-B819-D2335A3D5A24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4703A7FA-E1B0-4060-B819-D2335A3D5A24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4703A7FA-E1B0-4060-B819-D2335A3D5A24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4703A7FA-E1B0-4060-B819-D2335A3D5A24}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
