@@ -11,10 +11,15 @@ namespace Core.Models
         public string Telefone { get; set; }
         public string Email { get; set; }
         public string Senha { get; set; }
+        public ICollection<Address> Addresses { get; set; }
 
-        private User() { }
+        public User()
+        {
+            Addresses = new List<Address>();
+        }
 
         public User(string id, string nome, string apelido, string cpf, DateTime dataNascimento, string genero, string telefone, string email, string senha)
+            : this()
         {
             Id = id;
             Nome = nome;
@@ -28,6 +33,7 @@ namespace Core.Models
         }
 
         public User(string nome, string apelido, string cpf, DateTime dataNascimento, string genero, string telefone, string email, string senha)
+            : this()
         {
             Nome = nome;
             Apelido = apelido;
