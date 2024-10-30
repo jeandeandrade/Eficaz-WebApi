@@ -5,8 +5,8 @@ namespace Core.Repositories
     public interface IUserRepository
     {
         Task<User> GetUserByIdAsync(string userId);
-        Task AddUserAsync(User user);
-        Task UpdateUserAsync(string userId, User user);
+        Task<User> AddUserAsync(User user);
+        Task<User> UpdateUserAsync(string userId, User user);
         Task<bool> DeleteUserAsync(string userId);
     }
 }
