@@ -6,6 +6,6 @@ namespace Core.Services
     {
         public Task<Address> AddAddress(string userId, Address address);
         public Task<Address> UpdateAddress(string userId, Address address);
-        public Task<bool> DeleteAddress(Address address);
+        public Task<bool> DeleteAddress(string addressId);
     }
 }
