@@ -71,5 +71,17 @@ namespace Application.Services
 
             return true;
         }
+
+        public async Task<User> GetUserByIdAsync(string userId)
+        {
+            User? user = await _userRepository.GetUserByIdAsync(userId);
+
+            if (user == null)
+            {
+                throw new ArgumentException("Usuario não encontrado");
+            }
+
+            return user;
+        }
     }
 }

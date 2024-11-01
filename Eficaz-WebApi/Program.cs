@@ -13,6 +13,15 @@ namespace Presentation
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.Scan(scan => scan
+                .FromAssemblies(
+                typeof(Core.Services.IUserService).Assembly,
+                typeof(Infrastructure.Repositories.UserRepository).Assembly,
+                typeof(Application.Services.UserService).Assembly)
+                .AddClasses(classes => classes.Where(type => type.IsClass && !type.IsAbstract))
+                .AsImplementedInterfaces()
+                .WithScopedLifetime());
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
