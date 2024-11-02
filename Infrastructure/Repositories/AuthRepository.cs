@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories
 {
-    internal class AuthRepository : IAuthRepository
+    public class AuthRepository : IAuthRepository
     {
         private readonly EficazDbContext _context;
 

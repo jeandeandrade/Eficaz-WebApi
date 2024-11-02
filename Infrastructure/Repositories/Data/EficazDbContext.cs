@@ -16,7 +16,7 @@ public partial class EficazDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder
-            .UseCollation("utf8mb4_0900_ai_ci")
+            .UseCollation("utf8mb4_general_ci")
         .HasCharSet("utf8mb4");
 
         modelBuilder.Entity<User>()
@@ -30,6 +30,8 @@ public partial class EficazDbContext : DbContext
         modelBuilder.Entity<Address>()
             .Property(a => a.Id)
             .ValueGeneratedOnAdd();
+
+        OnModelCreatingPartial(modelBuilder);
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
