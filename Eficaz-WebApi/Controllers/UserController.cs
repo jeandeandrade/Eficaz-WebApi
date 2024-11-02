@@ -3,14 +3,15 @@ using Core.Models;
 using Core.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Presentation.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
-
         private readonly IUserService _userService;
         private readonly IAuthService _authService;
 
@@ -21,43 +22,77 @@ namespace Presentation.Controllers
         }
 
         [HttpGet]
-        public async Task<User> GetUser(string userId)
+        public async Task<ActionResult<User>> GetUser()
         {
-            User? user = await _userService.GetUserByIdAsync(userId);
+            var userId = _authService.GetAuthenticatedUserId(User);
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized();
+            }
 
-            return user;
+            User? user = await _userService.GetUserByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user);
         }
 
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
-            string userId = _authService.GetAuthenticatedUserId(User)!;
-            User newUser = await _userService.AddUser(user);
+            if (user == null)
+            {
+                return BadRequest("User data is required.");
+            }
 
-            return CreatedAtAction(nameof(newUser), new { id = newUser.Id }, newUser);
+            foreach (var address in user.Addresses)
+            {
+                address.User = user;
+                address.UserId = user.Id;
+            }
+
+            User newUser = await _userService.AddUser(user);
+            return CreatedAtAction(nameof(GetUser), new { id = newUser.Id }, newUser);
         }
 
         [HttpPut]
         public async Task<ActionResult<User>> UpdateUser(User user)
         {
-            string userId = _authService.GetAuthenticatedUserId(User)!;
-            User newUser = await _userService.AddUser(user);
+            var userId = _authService.GetAuthenticatedUserId(User);
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized();
+            }
 
-            return CreatedAtAction(nameof(newUser), new { id = newUser.Id }, newUser);
+            foreach (var address in user.Addresses)
+            {
+                address.User = user;
+                address.UserId = userId; 
+            }
+
+            User updatedUser = await _userService.UpdateUser(userId, user);
+            return Ok(updatedUser);
         }
 
+
         [HttpDelete]
-        public async Task<ActionResult> DeleteUser(string userId)
+        public async Task<ActionResult> DeleteUser()
         {
+            var userId = _authService.GetAuthenticatedUserId(User);
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized();
+            }
+
             bool isDeleted = await _userService.DeleteUser(userId);
-            
             if (isDeleted)
             {
                 return Ok();
             }
-            
+
             return BadRequest();
         }
     }
 }
-

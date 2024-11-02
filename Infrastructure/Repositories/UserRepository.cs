@@ -16,7 +16,7 @@ namespace Infrastructure.Repositories
 
         public async Task<User> GetUserByIdAsync(string userId)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            return await _context.Users.Include(u => u.Addresses).FirstOrDefaultAsync(u => u.Id == userId);
         }
 
         public async Task<User> AddUserAsync(User user)

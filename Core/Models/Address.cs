@@ -10,12 +10,15 @@ namespace Core.Models
         public string Complemento { get; set; }
         public string Cidade { get; set; }
         public string NumeroResidencia { get; set; }
+        public string UserId { get; set; }
 
-        private Address() { }
+
+        public Address() { }
 
         public Address(User user, string nomeRua, string bairro, string cep, string complemento, string cidade, string numeroResidencia)
         {
             User = user;
+            UserId = user.Id;
             NomeRua = nomeRua;
             Bairro = bairro;
             Cep = cep;
