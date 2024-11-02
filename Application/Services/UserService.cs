@@ -13,6 +13,18 @@ namespace Application.Services
             _userRepository = userRepository;
         }
 
+        public async Task<User> GetUserByIdAsync(string id)
+        {
+            User? user = await _userRepository.GetUserByIdAsync(id);
+
+            if (user == null)
+            {
+                throw new ArgumentException("Usuario não encontrado");
+            }
+
+            return user;
+        }
+
         public async Task<User> AddUser(User user)
         {
             if (user == null)
@@ -26,20 +38,20 @@ namespace Application.Services
             return user;
         }
 
-        public async Task<User> UpdateUser(string userId, User user)
+        public async Task<User> UpdateUser(string id, User user)
         {
-            if (user == null || string.IsNullOrEmpty(userId))
+            if (user == null || string.IsNullOrEmpty(id))
             {
                 throw new ArgumentNullException("User ou User Id não pode ser nulo");
             }
 
-            var existingUser = await _userRepository.GetUserByIdAsync(userId);
+            var existingUser = await _userRepository.GetUserByIdAsync(id);
             if (existingUser == null)
             {
                 throw new ArgumentException("Usuario não encontrado");
             }
 
-            existingUser.Id = userId;
+            existingUser.Id = id;
             existingUser.Nome = user.Nome;
             existingUser.Apelido = user.Apelido;
             existingUser.Cpf = user.Cpf;
@@ -49,39 +61,27 @@ namespace Application.Services
             existingUser.Email = user.Email;
             existingUser.Senha = user.Senha;
 
-            await _userRepository.UpdateUserAsync(userId, existingUser);
+            await _userRepository.UpdateUserAsync(id, existingUser);
 
             return existingUser;
         }
 
-        public async Task<bool> DeleteUser(string userId)
+        public async Task<bool> DeleteUser(string id)
         {
-            if (string.IsNullOrEmpty(userId))
+            if (string.IsNullOrEmpty(id))
             {
                 throw new ArgumentNullException("UserID não pode ser nulo");
             }
 
-            var user = await _userRepository.GetUserByIdAsync(userId);
+            var user = await _userRepository.GetUserByIdAsync(id);
             if (user == null)
             {
                 throw new ArgumentException("Usuario não existe");
             }
 
-            await _userRepository.DeleteUserAsync(userId);
+            await _userRepository.DeleteUserAsync(id);
 
             return true;
-        }
-
-        public async Task<User> GetUserByIdAsync(string userId)
-        {
-            User? user = await _userRepository.GetUserByIdAsync(userId);
-
-            if (user == null)
-            {
-                throw new ArgumentException("Usuario não encontrado");
-            }
-
-            return user;
         }
     }
 }

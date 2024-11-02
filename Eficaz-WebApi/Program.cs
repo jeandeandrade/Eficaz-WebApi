@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Presentation.Services;
 using System.Text;
+using dotenv.net;
 
 namespace Presentation
 {
@@ -46,10 +47,12 @@ namespace Presentation
         }
         private static void InjectRepositoryDependency(IHostApplicationBuilder builder)
         {
+            var connectionString = Environment.GetEnvironmentVariable("DEFAULT_CONNECTION"); // Obtém a string de conexão do .env
+
             builder.Services.AddDbContext<EficazDbContext>(options =>
                 options.UseMySql(
-                    builder.Configuration.GetConnectionString("DefaultConnection"),
-                    ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection")),
+                    connectionString,
+                    ServerVersion.AutoDetect(connectionString),
                     b => b.MigrationsAssembly("Presentation")
             ));
         }
@@ -72,6 +75,8 @@ namespace Presentation
 
         private static void AuthenticationMiddleware(IHostApplicationBuilder builder)
         {
+            var secretKey = Environment.GetEnvironmentVariable("JWT_SECRET_KEY"); // Obtém a chave secreta do .env
+
             // Configuração de autenticação e autorização
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -82,7 +87,7 @@ namespace Presentation
                         ValidateAudience = false,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SECRET_KEY"]!))
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
                     };
                 });
             builder.Services.AddAuthorization();
@@ -96,6 +101,8 @@ namespace Presentation
 
         public static void Main(string[] args)
         {
+            DotEnv.Load(); // Carrega as variáveis do .env
+
             var builder = WebApplication.CreateBuilder(args);
 
             ConfigureSwagger(builder.Services);
