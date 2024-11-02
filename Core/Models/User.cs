@@ -11,7 +11,7 @@ namespace Core.Models
         public string Telefone { get; set; }
         public string Email { get; set; }
         public string Senha { get; set; }
-        public ICollection<Address> Addresses { get; set; }
+        public List<Address> Addresses { get; set; }
 
         public User()
         {

@@ -31,6 +31,17 @@ public partial class EficazDbContext : DbContext
             .Property(a => a.Id)
             .ValueGeneratedOnAdd();
 
+        // Definindo o relacionamento entre User e Address
+        modelBuilder.Entity<User>()
+            .HasMany(u => u.Addresses)
+            .WithOne(a => a.User)
+            .HasForeignKey(a => a.UserId);
+
+        modelBuilder.Entity<Address>()
+            .HasOne(a => a.User)
+            .WithMany(u => u.Addresses)
+            .HasForeignKey(a => a.UserId);
+
         OnModelCreatingPartial(modelBuilder);
     }
 
