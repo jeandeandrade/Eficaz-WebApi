@@ -2,7 +2,7 @@ namespace Core.Models
 {
     public class Address
     {
-        public required string Id { get; set; }
+        public string Id { get; set; }
         public User User { get; set; }
         public string NomeRua { get; set; }
         public string Bairro { get; set; }
