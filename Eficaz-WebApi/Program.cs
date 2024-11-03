@@ -1,6 +1,7 @@
 using Application.Services;
 using Core.Repositories;
 using Core.Services;
+using dotenv.net;
 using Infrastructure.Repositories;
 using Infrastructure.Repositories.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -9,7 +10,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Presentation.Services;
 using System.Text;
-using dotenv.net;
 
 namespace Presentation
 {
@@ -125,6 +125,17 @@ namespace Presentation
 
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                               .AllowAnyMethod()
+                               .AllowAnyHeader();
+                    });
+            });
+
             ConfigureSwagger(builder.Services);
             InjectRepositoryDependency(builder);
             AddControllersAndDependencies(builder);
@@ -153,6 +164,8 @@ namespace Presentation
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors("AllowAll");
 
             app.UseAuthorization();
 
