@@ -1,5 +1,6 @@
 using Core.DTOs;
 using Core.Services;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers
@@ -16,6 +17,7 @@ namespace Presentation.Controllers
         }
 
         [HttpPost("signIn")]
+        [EnableCors("AllowAll")]
         public async Task<ActionResult<string>> SignIn(SignInDTO signInDTO)
         {
             try

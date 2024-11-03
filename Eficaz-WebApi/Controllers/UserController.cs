@@ -4,6 +4,7 @@ using Core.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 
 namespace Presentation.Controllers
 {
@@ -22,6 +23,7 @@ namespace Presentation.Controllers
         }
 
         [HttpGet]
+        [EnableCors("AllowAll")]
         public async Task<ActionResult<User>> GetUser()
         {
             var userId = _authService.GetAuthenticatedUserId(User);
@@ -40,6 +42,7 @@ namespace Presentation.Controllers
         }
 
         [HttpPost]
+        [EnableCors("AllowAll")]
         public async Task<ActionResult<User>> PostUser(User user)
         {
             if (user == null)
@@ -58,6 +61,7 @@ namespace Presentation.Controllers
         }
 
         [HttpPut]
+        [EnableCors("AllowAll")]
         public async Task<ActionResult<User>> UpdateUser(User user)
         {
             var userId = _authService.GetAuthenticatedUserId(User);
@@ -78,6 +82,7 @@ namespace Presentation.Controllers
 
 
         [HttpDelete]
+        [EnableCors("AllowAll")]
         public async Task<ActionResult> DeleteUser()
         {
             var userId = _authService.GetAuthenticatedUserId(User);
