@@ -2,14 +2,12 @@ using Core.Services;
 using Core.Models;
 using Core.DTOs;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 
 namespace Presentation.Controllers
 {
     [ApiController]
-    [Authorize]
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
@@ -24,6 +22,7 @@ namespace Presentation.Controllers
 
         [HttpGet]
         [EnableCors("AllowAll")]
+        [Authorize]
         public async Task<ActionResult<User>> GetUser()
         {
             var userId = _authService.GetAuthenticatedUserId(User);
@@ -42,27 +41,62 @@ namespace Presentation.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [EnableCors("AllowAll")]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<User>> PostUser(UserDTO userDto)
         {
-            if (user == null)
+            if (userDto == null)
             {
                 return BadRequest("User data is required.");
             }
 
-            foreach (var address in user.Addresses)
+            // Inicializar a variável user
+            User user = new User
             {
-                address.User = user;
-                address.UserId = user.Id;
-            }
+                Nome = userDto.Nome,
+                Apelido = userDto.Apelido,
+                Cpf = userDto.Cpf,
+                DataNascimento = userDto.DataNascimento,
+                Genero = userDto.Genero,
+                Telefone = userDto.Telefone,
+                Email = userDto.Email,
+                Senha = userDto.Senha,
+                Addresses = userDto.enderecos?.Select(a => new Address
+                {
+                    NomeRua = a.NomeRua,
+                    Bairro = a.Bairro,
+                    Cep = a.Cep,
+                    Complemento = a.Complemento,
+                    Cidade = a.Cidade,
+                    NumeroResidencia = a.NumeroResidencia
+                }).ToList()
+            };
 
-            User newUser = await _userService.AddUser(user);
-            return CreatedAtAction(nameof(GetUser), new { id = newUser.Id }, newUser);
+            try
+            {
+                // Adicionar usuário e associar endereços
+                User newUser = await _userService.AddUser(user);
+
+                if (newUser.Addresses != null)
+                {
+                    foreach (var address in newUser.Addresses)
+                    {
+                        address.UserId = newUser.Id;
+                    }
+                }
+
+                return CreatedAtAction(nameof(GetUser), new { id = newUser.Id }, newUser);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Ocorreu um erro ao salvar os dados: {ex.Message}");
+            }
         }
 
         [HttpPut]
         [EnableCors("AllowAll")]
-        public async Task<ActionResult<User>> UpdateUser(User user)
+        [Authorize]
+        public async Task<ActionResult<User>> UpdateUser(UserDTO userDto)
         {
             var userId = _authService.GetAuthenticatedUserId(User);
             if (string.IsNullOrEmpty(userId))
@@ -70,19 +104,44 @@ namespace Presentation.Controllers
                 return Unauthorized();
             }
 
-            foreach (var address in user.Addresses)
+            User user = new User
             {
-                address.User = user;
-                address.UserId = userId; 
+                Id = userId,
+                Nome = userDto.Nome,
+                Apelido = userDto.Apelido,
+                Cpf = userDto.Cpf,
+                DataNascimento = userDto.DataNascimento,
+                Genero = userDto.Genero,
+                Telefone = userDto.Telefone,
+                Email = userDto.Email,
+                Senha = userDto.Senha,
+                Addresses = userDto.enderecos?.Select(a => new Address
+                {
+                    Id = a.AddressId,
+                    NomeRua = a.NomeRua,
+                    Bairro = a.Bairro,
+                    Cep = a.Cep,
+                    Complemento = a.Complemento,
+                    Cidade = a.Cidade,
+                    NumeroResidencia = a.NumeroResidencia,
+                    UserId = userId
+                }).ToList()
+            };
+
+            try
+            {
+                User updatedUser = await _userService.UpdateUser(userId, user);
+                return Ok(updatedUser);
             }
-
-            User updatedUser = await _userService.UpdateUser(userId, user);
-            return Ok(updatedUser);
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Ocorreu um erro ao atualizar os dados: {ex.Message}");
+            }
         }
-
 
         [HttpDelete]
         [EnableCors("AllowAll")]
+        [Authorize]
         public async Task<ActionResult> DeleteUser()
         {
             var userId = _authService.GetAuthenticatedUserId(User);
@@ -91,13 +150,20 @@ namespace Presentation.Controllers
                 return Unauthorized();
             }
 
-            bool isDeleted = await _userService.DeleteUser(userId);
-            if (isDeleted)
+            try
             {
-                return Ok();
-            }
+                bool isDeleted = await _userService.DeleteUser(userId);
+                if (isDeleted)
+                {
+                    return Ok();
+                }
 
-            return BadRequest();
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Ocorreu um erro ao deletar o usuário: {ex.Message}");
+            }
         }
     }
 }

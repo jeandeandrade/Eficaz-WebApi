@@ -1,5 +1,6 @@
 using Core.Services;
 using Core.Models;
+using Core.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
@@ -51,15 +52,31 @@ namespace UnitTests.Presentation.Controllers
         [Fact]
         public async Task PostUser_ShouldReturnCreatedUser()
         {
+            var userDto = new UserDTO
+            {
+                Nome = "nome",
+                Apelido = "apelido",
+                Email = "email@example.com",
+                Cpf = "cpf",
+                DataNascimento = DateTime.Now,
+                Genero = "genero",
+                Telefone = "telefone",
+                enderecos = new List<AddressDTO>()
+            };
             var user = new User
             {
-                Id = "1",
                 Nome = "nome",
+                Apelido = "apelido",
+                Email = "email@example.com",
+                Cpf = "cpf",
+                DataNascimento = DateTime.Now,
+                Genero = "genero",
+                Telefone = "telefone",
                 Addresses = new List<Address>()
             };
-            _userServiceMock.Setup(service => service.AddUser(user)).ReturnsAsync(user);
+            _userServiceMock.Setup(service => service.AddUser(It.IsAny<User>())).ReturnsAsync(user);
 
-            var result = await _controller.PostUser(user);
+            var result = await _controller.PostUser(userDto);
 
             var createdAtActionResult = Assert.IsType<CreatedAtActionResult>(result.Result);
             var returnedUser = Assert.IsType<User>(createdAtActionResult.Value);
@@ -70,10 +87,32 @@ namespace UnitTests.Presentation.Controllers
         public async Task UpdateUser_ShouldReturnUpdatedUser()
         {
             var userId = "1";
-            var user = new User { Id = userId, Nome = "nome", Addresses = new List<Address>() };
-            _userServiceMock.Setup(service => service.UpdateUser(userId, user)).ReturnsAsync(user);
+            var userDto = new UserDTO
+            {
+                Nome = "nome",
+                Apelido = "apelido",
+                Email = "email@example.com",
+                Cpf = "cpf",
+                DataNascimento = DateTime.Now,
+                Genero = "genero",
+                Telefone = "telefone",
+                enderecos = new List<AddressDTO>()
+            };
+            var user = new User
+            {
+                Id = userId,
+                Nome = "nome",
+                Apelido = "apelido",
+                Email = "email@example.com",
+                Cpf = "cpf",
+                DataNascimento = DateTime.Now,
+                Genero = "genero",
+                Telefone = "telefone",
+                Addresses = new List<Address>()
+            };
+            _userServiceMock.Setup(service => service.UpdateUser(userId, It.IsAny<User>())).ReturnsAsync(user);
 
-            var result = await _controller.UpdateUser(user);
+            var result = await _controller.UpdateUser(userDto);
 
             var okResult = Assert.IsType<OkObjectResult>(result.Result);
             var returnedUser = Assert.IsType<User>(okResult.Value);
