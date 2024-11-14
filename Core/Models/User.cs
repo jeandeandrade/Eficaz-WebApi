@@ -11,11 +11,11 @@ namespace Core.Models
         public string Telefone { get; set; }
         public string Email { get; set; }
         public string Senha { get; set; }
-        public List<Address> Addresses { get; set; }
+        public List<Address> Enderecos { get; set; }
 
         public User()
         {
-            Addresses = new List<Address>();
+            Enderecos = new List<Address>();
         }
 
         public User(string id, string nome, string apelido, string cpf, DateTime dataNascimento, string genero, string telefone, string email, string senha)

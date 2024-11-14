@@ -18,7 +18,7 @@ namespace Infrastructure.Repositories
         {
             _context = context;
         }
-        public async Task<User?> GetUserByEmailAndPassword(string email, string password)
+        public async Task<User> GetUserByEmailAndPassword(string email, string password)
         {
             return await _context.Users.FirstOrDefaultAsync(u => u.Email == email && u.Senha == password);
         }

@@ -110,7 +110,7 @@ namespace Eficaz_WebApi.Migrations
             modelBuilder.Entity("Core.Models.Address", b =>
                 {
                     b.HasOne("Core.Models.User", "User")
-                        .WithMany("Addresses")
+                        .WithMany("Enderecos")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -120,7 +120,7 @@ namespace Eficaz_WebApi.Migrations
 
             modelBuilder.Entity("Core.Models.User", b =>
                 {
-                    b.Navigation("Addresses");
+                    b.Navigation("Enderecos");
                 });
 #pragma warning restore 612, 618
         }

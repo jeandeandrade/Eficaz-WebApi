@@ -49,7 +49,7 @@ namespace Application.Services
                 throw new ArgumentException("Usuário não encontrado");
             }
 
-            var existingAddress = user.Addresses.FirstOrDefault(a => a.Id == address.Id);
+            var existingAddress = user.Enderecos.FirstOrDefault(a => a.Id == address.Id);
             if (existingAddress == null)
             {
                 throw new ArgumentException("Endereço não encontrado");

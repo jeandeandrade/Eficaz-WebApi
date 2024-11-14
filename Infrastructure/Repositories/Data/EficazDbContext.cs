@@ -33,13 +33,13 @@ public partial class EficazDbContext : DbContext
 
         // Definindo o relacionamento entre User e Address
         modelBuilder.Entity<User>()
-            .HasMany(u => u.Addresses)
+            .HasMany(u => u.Enderecos)
             .WithOne(a => a.User)
             .HasForeignKey(a => a.UserId);
 
         modelBuilder.Entity<Address>()
             .HasOne(a => a.User)
-            .WithMany(u => u.Addresses)
+            .WithMany(u => u.Enderecos)
             .HasForeignKey(a => a.UserId);
 
         OnModelCreatingPartial(modelBuilder);

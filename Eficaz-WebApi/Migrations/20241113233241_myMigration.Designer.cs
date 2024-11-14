@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Eficaz_WebApi.Migrations
 {
     [DbContext(typeof(EficazDbContext))]
-    [Migration("20241101234833_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20241113233241_myMigration")]
+    partial class myMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -58,6 +58,7 @@ namespace Eficaz_WebApi.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.HasKey("Id");
@@ -112,15 +113,17 @@ namespace Eficaz_WebApi.Migrations
             modelBuilder.Entity("Core.Models.Address", b =>
                 {
                     b.HasOne("Core.Models.User", "User")
-                        .WithMany("Addresses")
-                        .HasForeignKey("UserId");
+                        .WithMany("Enderecos")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("Core.Models.User", b =>
                 {
-                    b.Navigation("Addresses");
+                    b.Navigation("Enderecos");
                 });
 #pragma warning restore 612, 618
         }

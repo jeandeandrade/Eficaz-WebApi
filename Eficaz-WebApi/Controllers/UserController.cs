@@ -61,7 +61,7 @@ namespace Presentation.Controllers
                 Telefone = userDto.Telefone,
                 Email = userDto.Email,
                 Senha = userDto.Senha,
-                Addresses = userDto.enderecos?.Select(a => new Address
+                Enderecos = userDto.Enderecos?.Select(a => new Address
                 {
                     NomeRua = a.NomeRua,
                     Bairro = a.Bairro,
@@ -77,9 +77,9 @@ namespace Presentation.Controllers
                 // Adicionar usuário e associar endereços
                 User newUser = await _userService.AddUser(user);
 
-                if (newUser.Addresses != null)
+                if (newUser.Enderecos != null)
                 {
-                    foreach (var address in newUser.Addresses)
+                    foreach (var address in newUser.Enderecos)
                     {
                         address.UserId = newUser.Id;
                     }
@@ -115,9 +115,8 @@ namespace Presentation.Controllers
                 Telefone = userDto.Telefone,
                 Email = userDto.Email,
                 Senha = userDto.Senha,
-                Addresses = userDto.enderecos?.Select(a => new Address
+                Enderecos = userDto.Enderecos?.Select(a => new Address
                 {
-                    Id = a.AddressId,
                     NomeRua = a.NomeRua,
                     Bairro = a.Bairro,
                     Cep = a.Cep,

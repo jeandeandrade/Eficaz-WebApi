@@ -24,7 +24,7 @@ namespace Application.Services
 
         public async Task<string> SignIn(string email, string password)
         {
-            User? user = await _authRepository.GetUserByEmailAndPassword(email, password);
+            User user = await _authRepository.GetUserByEmailAndPassword(email, password);
             if (user == null)
             {
                 throw new Exception("Usuário e/ou senha inválidos");
