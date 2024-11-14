@@ -16,7 +16,7 @@ namespace Infrastructure.Repositories
 
         public async Task<User> GetUserByIdAsync(string userId)
         {
-            return await _context.Users.Include(u => u.Addresses).FirstOrDefaultAsync(u => u.Id == userId);
+            return await _context.Users.Include(u => u.Enderecos).FirstOrDefaultAsync(u => u.Id == userId);
         }
 
         public async Task<User> AddUserAsync(User user)
@@ -44,7 +44,7 @@ namespace Infrastructure.Repositories
             existingUser.Telefone = user.Telefone;
             existingUser.Email = user.Email;
             existingUser.Senha = user.Senha;
-            existingUser.Addresses = user.Addresses;
+            existingUser.Enderecos = user.Enderecos;
 
             await _context.SaveChangesAsync();
 

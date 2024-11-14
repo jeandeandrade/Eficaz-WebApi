@@ -10,6 +10,6 @@ namespace Core.DTOs
         public string Telefone { get; set; }
         public string Email { get; set; }
         public string Senha { get; set; }
-        public List<AddressDTO> enderecos { get; set; }
+        public List<AddressDTO> Enderecos { get; set; }
     }
 }

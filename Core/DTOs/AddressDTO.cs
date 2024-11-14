@@ -2,7 +2,6 @@ namespace Core.DTOs
 {
     public class AddressDTO
     {
-        public string? AddressId { get; set; } // Nullable para permitir criação sem ID
         public string NomeRua { get; set; }
         public string Bairro { get; set; }
         public string Cep { get; set; }
