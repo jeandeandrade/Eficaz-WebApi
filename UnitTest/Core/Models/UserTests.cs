@@ -20,8 +20,8 @@ namespace UnitTests.Core.Models
             Assert.Equal("telefone", user.Telefone);
             Assert.Equal("email", user.Email);
             Assert.Equal("senha", user.Senha);
-            Assert.NotNull(user.Addresses);
-            Assert.Empty(user.Addresses);
+            Assert.NotNull(user.Enderecos);
+            Assert.Empty(user.Enderecos);
         }
 
         [Fact]
@@ -43,8 +43,8 @@ namespace UnitTests.Core.Models
             Assert.Equal("telefone", user.Telefone);
             Assert.Equal("email", user.Email);
             Assert.Equal("senha", user.Senha);
-            Assert.NotNull(user.Addresses);
-            Assert.Empty(user.Addresses);
+            Assert.NotNull(user.Enderecos);
+            Assert.Empty(user.Enderecos);
         }
 
         [Fact]
@@ -73,8 +73,8 @@ namespace UnitTests.Core.Models
             Assert.Equal("telefone", user.Telefone);
             Assert.Equal("email", user.Email);
             Assert.Equal("senha", user.Senha);
-            Assert.NotNull(user.Addresses);
-            Assert.Empty(user.Addresses);
+            Assert.NotNull(user.Enderecos);
+            Assert.Empty(user.Enderecos);
         }
     }
 }

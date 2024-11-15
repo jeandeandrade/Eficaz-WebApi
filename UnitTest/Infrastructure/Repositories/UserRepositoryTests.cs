@@ -22,7 +22,6 @@ namespace UnitTests.Infrastructure.Repositories
         {
             using (var context = new EficazDbContext(_options))
             {
-                // Arrange
                 var userRepository = new UserRepository(context);
                 var user = new User
                 {
@@ -37,11 +36,9 @@ namespace UnitTests.Infrastructure.Repositories
                     Senha = "password"
                 };
 
-                // Act
                 await userRepository.AddUserAsync(user);
                 var userFromDb = await context.Users.FindAsync(user.Id);
 
-                // Assert
                 Assert.NotNull(userFromDb);
                 Assert.Equal("nome", userFromDb.Nome);
             }
@@ -52,11 +49,9 @@ namespace UnitTests.Infrastructure.Repositories
         {
             using (var context = new EficazDbContext(_options))
             {
-                // Limpa o banco antes de cada teste
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                // Arrange
                 var userRepository = new UserRepository(context);
                 var userId = Guid.NewGuid().ToString();
                 var user = new User
@@ -75,10 +70,8 @@ namespace UnitTests.Infrastructure.Repositories
                 context.Users.Add(user);
                 await context.SaveChangesAsync();
 
-                // Act
                 var result = await userRepository.GetUserByIdAsync(userId);
 
-                // Assert
                 Assert.NotNull(result);
                 Assert.Equal(userId, result.Id);
             }
@@ -89,11 +82,9 @@ namespace UnitTests.Infrastructure.Repositories
         {
             using (var context = new EficazDbContext(_options))
             {
-                // Limpa o banco antes de cada teste
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                // Arrange
                 var userRepository = new UserRepository(context);
                 var userId = Guid.NewGuid().ToString();
                 var user = new User
@@ -114,22 +105,28 @@ namespace UnitTests.Infrastructure.Repositories
 
                 user.Nome = "novo_nome";
 
-                // Act
                 var result = await userRepository.UpdateUserAsync(userId, user);
                 var userFromDb = await context.Users.FindAsync(userId);
 
-                // Assert
                 Assert.NotNull(userFromDb);
                 Assert.Equal("novo_nome", userFromDb.Nome);
             }
         }
 
+        private DbContextOptions<EficazDbContext> CreateNewContextOptions()
+        {
+            return new DbContextOptionsBuilder<EficazDbContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()) 
+                .Options;
+        }
+
         [Fact]
         public async Task DeleteUserAsync_ShouldDeleteUser()
         {
-            using (var context = new EficazDbContext(_options))
+            var options = CreateNewContextOptions();
+
+            using (var context = new EficazDbContext(options))
             {
-                // Limpa o banco antes de cada teste
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
@@ -152,11 +149,9 @@ namespace UnitTests.Infrastructure.Repositories
                 context.Users.Add(user);
                 await context.SaveChangesAsync();
 
-                // Act
                 var result = await userRepository.DeleteUserAsync(userId);
                 var userFromDb = await context.Users.FindAsync(userId);
 
-                // Assert
                 Assert.True(result);
                 Assert.Null(userFromDb);
             }
