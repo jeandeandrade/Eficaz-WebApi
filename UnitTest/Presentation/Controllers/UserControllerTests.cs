@@ -61,7 +61,7 @@ namespace UnitTests.Presentation.Controllers
                 DataNascimento = DateTime.Now,
                 Genero = "genero",
                 Telefone = "telefone",
-                enderecos = new List<AddressDTO>()
+                Enderecos = new List<AddressDTO>()
             };
             var user = new User
             {
@@ -72,7 +72,7 @@ namespace UnitTests.Presentation.Controllers
                 DataNascimento = DateTime.Now,
                 Genero = "genero",
                 Telefone = "telefone",
-                Addresses = new List<Address>()
+                Enderecos = new List<Address>()
             };
             _userServiceMock.Setup(service => service.AddUser(It.IsAny<User>())).ReturnsAsync(user);
 
@@ -96,7 +96,7 @@ namespace UnitTests.Presentation.Controllers
                 DataNascimento = DateTime.Now,
                 Genero = "genero",
                 Telefone = "telefone",
-                enderecos = new List<AddressDTO>()
+                Enderecos = new List<AddressDTO>()
             };
             var user = new User
             {
@@ -108,7 +108,7 @@ namespace UnitTests.Presentation.Controllers
                 DataNascimento = DateTime.Now,
                 Genero = "genero",
                 Telefone = "telefone",
-                Addresses = new List<Address>()
+                Enderecos = new List<Address>()
             };
             _userServiceMock.Setup(service => service.UpdateUser(userId, It.IsAny<User>())).ReturnsAsync(user);
 

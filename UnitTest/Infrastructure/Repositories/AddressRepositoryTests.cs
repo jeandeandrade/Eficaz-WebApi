@@ -109,12 +109,20 @@ namespace UnitTests.Infrastructure.Repositories
             }
         }
 
+        private DbContextOptions<EficazDbContext> CreateNewContextOptions()
+        {
+            return new DbContextOptionsBuilder<EficazDbContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+        }
+
         [Fact]
         public async Task UpdateAddressAsync_ShouldUpdateAddress()
         {
-            using (var context = new EficazDbContext(_options))
+            var options = CreateNewContextOptions();
+
+            using (var context = new EficazDbContext(options))
             {
-                // Limpa o banco antes de cada teste
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
@@ -122,7 +130,7 @@ namespace UnitTests.Infrastructure.Repositories
                 var addressRepository = new AddressRepository(context);
                 var address = new Address
                 {
-                    Id = Guid.NewGuid().ToString(), // Gere um ID único
+                    Id = Guid.NewGuid().ToString(), 
                     NomeRua = "Rua das Acácias",
                     Bairro = "Jardim das Acácias",
                     Cep = "23456-789",
@@ -149,15 +157,14 @@ namespace UnitTests.Infrastructure.Repositories
 
                 address.NomeRua = "Rua Nova";
 
-                // Act
                 await addressRepository.UpdateAddressAsync(address.Id, address);
                 var addressFromDb = await context.Address.FindAsync(address.Id);
 
-                // Assert
                 Assert.NotNull(addressFromDb);
                 Assert.Equal("Rua Nova", addressFromDb.NomeRua);
             }
         }
+
 
         [Fact]
         public async Task DeleteAddressAsync_ShouldReturnTrue()

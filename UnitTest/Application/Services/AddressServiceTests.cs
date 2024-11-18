@@ -41,7 +41,7 @@ namespace UnitTests.Application.Services
         {
             var userId = "1";
             var addressId = "addressId";
-            var user = new User { Id = userId, Nome = "nome", Addresses = new List<Address> { new Address { Id = addressId, NomeRua = "Old Name" } } };
+            var user = new User { Id = userId, Nome = "nome", Enderecos = new List<Address> { new Address { Id = addressId, NomeRua = "Old Name" } } };
             var newAddress = new Address { Id = addressId, NomeRua = "New Name" };
             _userRepositoryMock.Setup(repo => repo.GetUserByIdAsync(userId)).ReturnsAsync(user);
 
