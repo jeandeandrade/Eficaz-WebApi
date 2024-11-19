@@ -7,6 +7,9 @@ public partial class EficazDbContext : DbContext
 {
     public DbSet<User> Users { get; set; }
     public DbSet<Address> Address { get; set; }
+    public DbSet<Marca> Marca { get; set; }
+    public DbSet<Product> Product { get; set; }
+    public DbSet<Category> Category { get; set; }
 
     public EficazDbContext() { }
 
@@ -41,6 +44,34 @@ public partial class EficazDbContext : DbContext
             .HasOne(a => a.User)
             .WithMany(u => u.Enderecos)
             .HasForeignKey(a => a.UserId);
+
+        modelBuilder.Entity<Marca>()
+           .HasKey(m => m.Id);
+        modelBuilder.Entity<Marca>()
+            .Property(m => m.Id)
+            .ValueGeneratedOnAdd();
+
+        modelBuilder.Entity<Category>()
+           .HasKey(c => c.Id);
+        modelBuilder.Entity<Category>()
+            .Property(c => c.Id)
+            .ValueGeneratedOnAdd();
+
+        modelBuilder.Entity<Product>()
+           .HasKey(p => p.Id);
+        modelBuilder.Entity<Product>()
+            .Property(p => p.Id)
+            .ValueGeneratedOnAdd();
+
+        modelBuilder.Entity<Product>()
+            .HasOne(p => p.Marca)
+            .WithMany(m => m.Produtos)
+            .HasForeignKey(p => p.MarcaId);
+
+        modelBuilder.Entity<Product>()
+            .HasOne(p => p.Categoria)
+            .WithMany(c => c.Produtos)
+            .HasForeignKey(p => p.CategoriaId);
 
         OnModelCreatingPartial(modelBuilder);
     }
