@@ -51,8 +51,7 @@ namespace Infrastructure.Repositories
 
         public async Task<bool> DeleteAddressAsync(string addressId)
         {
-            var address = await _context.Address.FirstOrDefaultAsync(a => a.Id == addressId);
-
+            var address = await _context.Address.FindAsync(addressId);
             if (address == null)
             {
                 throw new ArgumentException("Endereço não encontrado");
@@ -60,8 +59,8 @@ namespace Infrastructure.Repositories
 
             _context.Address.Remove(address);
             await _context.SaveChangesAsync();
-
             return true;
         }
+
     }
 }
