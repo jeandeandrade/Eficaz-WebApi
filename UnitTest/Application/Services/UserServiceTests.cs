@@ -34,7 +34,7 @@ namespace UnitTests.Application.Services
         [Fact]
         public async Task AddUser_ShouldAddUser()
         {
-            var user = new User { Id = "123", Nome = "nome" };
+            var user = new User { Id = "123", Nome = "nome", Cpf = "52998224725" }; // CPF válido
             _userRepositoryMock.Setup(repo => repo.AddUserAsync(It.IsAny<User>())).ReturnsAsync(user);
 
             var result = await _userService.AddUser(user);
@@ -48,7 +48,7 @@ namespace UnitTests.Application.Services
         public async Task UpdateUser_ShouldUpdateUser()
         {
             var userId = "1";
-            var user = new User { Id = userId, Nome = "nome" };
+            var user = new User { Id = userId, Nome = "nome", Cpf = "52998224725" }; // CPF válido
             _userRepositoryMock.Setup(repo => repo.GetUserByIdAsync(userId)).ReturnsAsync(user);
             _userRepositoryMock.Setup(repo => repo.UpdateUserAsync(userId, It.IsAny<User>())).ReturnsAsync(user);
 

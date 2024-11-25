@@ -1,4 +1,4 @@
-/*using Core.Models;
+using Core.Models;
 using Infrastructure.Repositories;
 using Infrastructure.Repositories.Data;
 using Microsoft.EntityFrameworkCore;
@@ -45,35 +45,52 @@ namespace UnitTests.Infrastructure.Repositories
         }
 
         [Fact]
-        public async Task GetUserByIdAsync_ShouldReturnUser()
+        public async Task GetAddressByIdAsync_ShouldReturnAddress()
         {
-            using (var context = new EficazDbContext(_options))
+            var options = new DbContextOptionsBuilder<EficazDbContext>()
+                .UseInMemoryDatabase(databaseName: "TestDatabase")
+                .Options;
+
+            using (var context = new EficazDbContext(options))
             {
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                var userRepository = new UserRepository(context);
-                var userId = Guid.NewGuid().ToString();
-                var user = new User
+                // Arrange
+                var addressRepository = new AddressRepository(context);
+                var address = new Address
                 {
-                    Id = userId,
-                    Nome = "nome",
-                    Apelido = "apelido",
-                    Cpf = "12345678900",
-                    DataNascimento = DateTime.Now,
-                    Genero = "Masculino",
-                    Telefone = "123456789",
-                    Email = "email@example.com",
-                    Senha = "password"
+                    Id = Guid.NewGuid().ToString(),
+                    NomeRua = "Rua das Acácias",
+                    Bairro = "Jardim das Acácias",
+                    Cep = "23456-789",
+                    Complemento = "Casa 1",
+                    Cidade = "Rio de Janeiro",
+                    NumeroResidencia = "50",
+                    UserId = "1",
+                    User = new User
+                    {
+                        Id = "1",
+                        Nome = "João",
+                        Apelido = "João",
+                        Cpf = "987.654.321-00",
+                        DataNascimento = DateTime.Now,
+                        Genero = "Masculino",
+                        Telefone = "21912345678",
+                        Email = "joao.souza@example.com",
+                        Senha = "senha123"
+                    }
                 };
 
-                context.Users.Add(user);
-                await context.SaveChangesAsync();
+                context.Address.Add(address);
+                await context.SaveChangesAsync();  // Garantir que o endereço foi salvo
 
-                var result = await userRepository.GetUserByIdAsync(userId);
+                // Act
+                var result = await addressRepository.GetAddressByIdAsync(address.Id);
 
+                // Assert
                 Assert.NotNull(result);
-                Assert.Equal(userId, result.Id);
+                Assert.Equal(address.Id, result.Id);
             }
         }
 
@@ -116,7 +133,7 @@ namespace UnitTests.Infrastructure.Repositories
         private DbContextOptions<EficazDbContext> CreateNewContextOptions()
         {
             return new DbContextOptionsBuilder<EficazDbContext>()
-                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()) 
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
         }
 
@@ -156,4 +173,4 @@ namespace UnitTests.Infrastructure.Repositories
             }
         }
     }
-}*/
+}

@@ -4,7 +4,7 @@ using Infrastructure.Repositories.Data;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 
-namespace UnitTests.Infrastructure.Repositories
+namespace UnitTest.IntegrationTests
 {
     public class AuthRepositoryTests
     {
@@ -39,7 +39,6 @@ namespace UnitTests.Infrastructure.Repositories
                 context.Users.Add(user);
                 await context.SaveChangesAsync();
 
-                // Act
                 var result = await authRepository.GetUserByEmailAndPassword("joao.souza@example.com", "senha123");
 
                 Assert.NotNull(result);
