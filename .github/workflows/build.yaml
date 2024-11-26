@@ -33,15 +33,23 @@ jobs:
         if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
         shell: powershell
         run: |
+          # Verifica se o diretório do scanner já existe e remove se necessário
           if (Test-Path .\.sonar\scanner) {
             Remove-Item -Recurse -Force .\.sonar\scanner
           }
           New-Item -Path .\.sonar\scanner -ItemType Directory -Force
+          
+          # Instala o SonarQube scanner
           dotnet tool install dotnet-sonarscanner --tool-path .\.sonar\scanner
-      
+
       - name: Build and analyze
         shell: powershell
         run: |
+          # Inicia a análise do SonarQube
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"Eficaz-WebApi" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}"
+          
+          # Realiza o build do projeto
           dotnet build
+          
+          # Finaliza a análise do SonarQube
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
