@@ -46,7 +46,7 @@ jobs:
         shell: powershell
         run: |
           # Inicia a análise do SonarQube
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"Eficaz-WebApi" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarqube.labs.unimar.br"
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"Eficaz-WebApi" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}"
           
           # Realiza o build do projeto
           dotnet build

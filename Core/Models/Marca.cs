@@ -17,5 +17,26 @@ namespace Core.Models
         public DateTime DataAtualizacao { get; set; }
 
         public Marca() { }
+
+        public Marca(int id, string nome, bool excluido, string descricao, List<Product> produtos, DateTime dataCriacao, DateTime dataAtualizacao)
+        {
+            Id = id;
+            Nome = nome;
+            Excluido = excluido;
+            Descricao = descricao;
+            Produtos = produtos;
+            DataCriacao = dataCriacao;
+            DataAtualizacao = dataAtualizacao;
+        }
+
+        public Marca(string nome, bool excluido, string descricao, List<Product> produtos, DateTime dataCriacao, DateTime dataAtualizacao)
+        {
+            Nome = nome;
+            Excluido = excluido;
+            Descricao = descricao;
+            Produtos = produtos;
+            DataCriacao = dataCriacao;
+            DataAtualizacao = dataAtualizacao;
+        }
     }
 }
