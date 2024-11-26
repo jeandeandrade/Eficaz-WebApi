@@ -21,7 +21,7 @@ jobs:
           java-version: 17
 
       - name: Cache SonarQube packages
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             ~/.sonar/cache
@@ -46,7 +46,7 @@ jobs:
         shell: powershell
         run: |
           # Inicia a análise do SonarQube
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"Eficaz-WebApi" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}"
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"Eficaz-WebApi" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarqube.labs.unimar.br"
           
           # Realiza o build do projeto
           dotnet build
