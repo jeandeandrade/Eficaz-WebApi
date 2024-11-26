@@ -33,7 +33,9 @@ jobs:
         if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
         shell: powershell
         run: |
-          Remove-Item -Recurse -Force .\.sonar\scanner
+          if (Test-Path .\.sonar\scanner) {
+            Remove-Item -Recurse -Force .\.sonar\scanner
+          }
           New-Item -Path .\.sonar\scanner -ItemType Directory -Force
           dotnet tool install dotnet-sonarscanner --tool-path .\.sonar\scanner
       
