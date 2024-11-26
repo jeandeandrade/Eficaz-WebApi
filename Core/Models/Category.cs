@@ -15,5 +15,28 @@ namespace Core.Models
         public List<Product> Produtos { get; set; }
         public DateTime DataCriacao { get; set; }
         public DateTime DataAtualizacao { get; set; }
+
+        public Category () {}
+
+        public Category(int id, string nome, bool excluido, string descricao, List<Product> produtos, DateTime dataCriacao, DateTime dataAtualizacao)
+        {
+            Id = id;
+            Nome = nome;
+            Excluido = excluido;
+            Descricao = descricao;
+            Produtos = produtos;
+            DataCriacao = dataCriacao;
+            DataAtualizacao = dataAtualizacao;
+        }
+
+        public Category(string nome, bool excluido, string descricao, List<Product> produtos, DateTime dataCriacao, DateTime dataAtualizacao)
+        {
+            Nome = nome;
+            Excluido = excluido;
+            Descricao = descricao;
+            Produtos = produtos;
+            DataCriacao = dataCriacao;
+            DataAtualizacao = dataAtualizacao;
+        }
     }
 }

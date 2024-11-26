@@ -1,11 +1,7 @@
+using Core.DTOs;
 using Core.Models;
 using Core.Repositories;
 using Core.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Services
 {
@@ -30,23 +26,37 @@ namespace Application.Services
             return product;
         }
 
-        public async Task<Product> AddProduct(Product product)
+        public async Task<List<Product>> GetAllProductsAsync()
         {
-            if(product == null)
+            return await _productRepository.GetAllProductsAsync();
+        }
+
+        public async Task<Product> AddProduct(ProductDTO productDTO)
+        {
+            if (productDTO == null)
             {
-                throw new ArgumentNullException(nameof(product));
+                throw new ArgumentNullException(nameof(productDTO));
             }
 
-            product.Id = Guid.NewGuid().ToString();
-            product.DataCriacao = DateTime.Now;
+            Product product = new Product 
+            {
+               Id = Guid.NewGuid().ToString(),
+                DataCriacao = DateTime.Now,
+                Titulo = productDTO.Titulo,
+                SKU = productDTO.SKU,
+                PrecoPor = productDTO.PrecoPor,
+                CategoriaId = productDTO.CategoriaId,
+                MarcaId = productDTO.MarcaId
+            };
+            
             await _productRepository.AddProductAsync(product);
 
             return product;
         }
 
-        public async Task<Product> UpdateProduct(string productId, Product product)
+        public async Task<Product> UpdateProduct(string productId, ProductDTO productDTO)
         {
-            if(productId == null || product == null) { 
+            if(productId == null || productDTO == null) { 
                 throw new ArgumentNullException("Produto ou o Id do produto não pode ser nulo");
             }
 
@@ -57,13 +67,13 @@ namespace Application.Services
                 throw new ArgumentException("Produto não encontrado");
             }
 
-            existingProduct.Titulo = product.Titulo;
-            existingProduct.SKU = product.SKU;
-            existingProduct.PrecoPor = product.PrecoPor;
-            existingProduct.DataCriacao = product.DataCriacao;
+            existingProduct.Titulo = productDTO.Titulo;
+            existingProduct.SKU = productDTO.SKU;
+            existingProduct.PrecoPor = productDTO.PrecoPor;
+            existingProduct.DataCriacao = productDTO.DataCriacao;
             existingProduct.DataAtualizacao = DateTime.Now;
-            existingProduct.Categoria = product.Categoria;
-            existingProduct.Marca = product.Marca;
+            existingProduct.CategoriaId = productDTO.CategoriaId;
+            existingProduct.MarcaId = productDTO.MarcaId;
 
             await _productRepository.UpdateProductAsync(productId, existingProduct);
 
@@ -84,7 +94,7 @@ namespace Application.Services
                 throw new ArgumentException("Produto não encontrado");
             }
 
-
+            return await _productRepository.DeleteProductAsync(productId);
         }
     }
 }

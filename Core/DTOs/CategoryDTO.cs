@@ -8,6 +8,7 @@ namespace Core.DTOs
 {
     public class CategoryDTO
     {
+        public int Id { get; set; }
         public string Nome { get; set; }
         public bool Excluido { get; set; }
         public string Descricao { get; set; }

@@ -1,3 +1,4 @@
+using Core.DTOs;
 using Core.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,8 +8,8 @@ public partial class EficazDbContext : DbContext
 {
     public DbSet<User> Users { get; set; }
     public DbSet<Address> Address { get; set; }
-    public DbSet<MarcaDTO> Marca { get; set; }
     public DbSet<Product> Product { get; set; }
+    public DbSet<MarcaDTO> Marca { get; set; }
     public DbSet<CategoryDTO> Category { get; set; }
 
     public EficazDbContext() { }
@@ -20,7 +21,7 @@ public partial class EficazDbContext : DbContext
     {
         modelBuilder
             .UseCollation("utf8mb4_general_ci")
-        .HasCharSet("utf8mb4");
+            .HasCharSet("utf8mb4");
 
         modelBuilder.Entity<User>()
             .HasKey(u => u.Id);
