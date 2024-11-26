@@ -7,9 +7,9 @@ public partial class EficazDbContext : DbContext
 {
     public DbSet<User> Users { get; set; }
     public DbSet<Address> Address { get; set; }
-    public DbSet<Marca> Marca { get; set; }
+    public DbSet<MarcaDTO> Marca { get; set; }
     public DbSet<Product> Product { get; set; }
-    public DbSet<Category> Category { get; set; }
+    public DbSet<CategoryDTO> Category { get; set; }
 
     public EficazDbContext() { }
 
@@ -45,15 +45,15 @@ public partial class EficazDbContext : DbContext
             .WithMany(u => u.Enderecos)
             .HasForeignKey(a => a.UserId);
 
-        modelBuilder.Entity<Marca>()
+        modelBuilder.Entity<MarcaDTO>()
            .HasKey(m => m.Id);
-        modelBuilder.Entity<Marca>()
+        modelBuilder.Entity<MarcaDTO>()
             .Property(m => m.Id)
             .ValueGeneratedOnAdd();
 
-        modelBuilder.Entity<Category>()
+        modelBuilder.Entity<CategoryDTO>()
            .HasKey(c => c.Id);
-        modelBuilder.Entity<Category>()
+        modelBuilder.Entity<CategoryDTO>()
             .Property(c => c.Id)
             .ValueGeneratedOnAdd();
 
