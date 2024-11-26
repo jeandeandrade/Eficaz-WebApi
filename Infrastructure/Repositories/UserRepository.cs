@@ -21,11 +21,21 @@ namespace Infrastructure.Repositories
 
         public async Task<User> AddUserAsync(User user)
         {
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Users.Add(user);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException dbEx)
+            {
+                // Log de erro específico para falhas no banco de dados
+                Console.WriteLine($"Erro de banco de dados ao salvar o usuário: {dbEx.Message}");
+                throw new Exception("Erro ao salvar o usuário no banco de dados.", dbEx);
+            }
 
             return user;
         }
+
 
         public async Task<User> UpdateUserAsync(string userId, User user)
         {
