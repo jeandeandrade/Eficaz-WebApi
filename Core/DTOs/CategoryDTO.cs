@@ -4,18 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Models
+namespace Core.DTOs
 {
-    public class Marca
+    public class CategoryDTO
     {
-        public int Id { get; set; }
         public string Nome { get; set; }
         public bool Excluido { get; set; }
         public string Descricao { get; set; }
-        public List<Product> Produtos { get; set; }
+        public List<ProductDTO> Produtos { get; set; }
         public DateTime DataCriacao { get; set; }
         public DateTime DataAtualizacao { get; set; }
-
-        public Marca() { }
     }
 }
