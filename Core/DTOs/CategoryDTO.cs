@@ -12,6 +12,7 @@ namespace Core.DTOs
         public string Nome { get; set; }
         public bool Excluido { get; set; }
         public string Descricao { get; set; }
+        public string? ImageUrl { get; set; }
         public List<ProductDTO> Produtos { get; set; }
         public DateTime DataCriacao { get; set; }
         public DateTime DataAtualizacao { get; set; }

@@ -48,6 +48,7 @@ namespace Infrastructure.Repositories
             existingProduct.DataAtualizacao = DateTime.Now;
             existingProduct.Categoria = product.Categoria;
             existingProduct.Marca = product.Marca;
+            existingProduct.Images = product.Images;
 
             await _context.SaveChangesAsync();
 
