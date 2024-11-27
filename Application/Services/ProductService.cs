@@ -46,7 +46,8 @@ namespace Application.Services
                 SKU = productDTO.SKU,
                 PrecoPor = productDTO.PrecoPor,
                 CategoriaId = productDTO.CategoriaId,
-                MarcaId = productDTO.MarcaId
+                MarcaId = productDTO.MarcaId,
+                Images = productDTO.Images,
             };
             
             await _productRepository.AddProductAsync(product);
@@ -74,7 +75,8 @@ namespace Application.Services
             existingProduct.DataAtualizacao = DateTime.Now;
             existingProduct.CategoriaId = productDTO.CategoriaId;
             existingProduct.MarcaId = productDTO.MarcaId;
-
+            existingProduct.Images = productDTO.Images;
+                       
             await _productRepository.UpdateProductAsync(productId, existingProduct);
 
             return existingProduct;

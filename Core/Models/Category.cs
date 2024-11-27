@@ -15,10 +15,11 @@ namespace Core.Models
         public List<Product> Produtos { get; set; }
         public DateTime DataCriacao { get; set; }
         public DateTime DataAtualizacao { get; set; }
+        public string? ImageUrl { get; set; }
 
         public Category () {}
 
-        public Category(int id, string nome, bool excluido, string descricao, List<Product> produtos, DateTime dataCriacao, DateTime dataAtualizacao)
+        public Category(int id, string nome, bool excluido, string descricao, List<Product> produtos, DateTime dataCriacao, DateTime dataAtualizacao, string imageUrl)
         {
             Id = id;
             Nome = nome;
@@ -27,9 +28,10 @@ namespace Core.Models
             Produtos = produtos;
             DataCriacao = dataCriacao;
             DataAtualizacao = dataAtualizacao;
+            ImageUrl = imageUrl;
         }
 
-        public Category(string nome, bool excluido, string descricao, List<Product> produtos, DateTime dataCriacao, DateTime dataAtualizacao)
+        public Category(string nome, bool excluido, string descricao, List<Product> produtos, DateTime dataCriacao, DateTime dataAtualizacao, string imageUrl)
         {
             Nome = nome;
             Excluido = excluido;
@@ -37,6 +39,7 @@ namespace Core.Models
             Produtos = produtos;
             DataCriacao = dataCriacao;
             DataAtualizacao = dataAtualizacao;
+            ImageUrl = imageUrl;
         }
     }
 }

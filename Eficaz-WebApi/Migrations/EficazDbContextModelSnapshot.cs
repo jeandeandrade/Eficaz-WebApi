@@ -86,6 +86,9 @@ namespace Eficaz_WebApi.Migrations
                     b.Property<bool>("Excluido")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -127,11 +130,9 @@ namespace Eficaz_WebApi.Migrations
 
             modelBuilder.Entity("Core.Models.Product", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("varchar(255)");
 
                     b.Property<int>("CategoriaId")
                         .HasColumnType("int");
@@ -141,6 +142,13 @@ namespace Eficaz_WebApi.Migrations
 
                     b.Property<DateTime>("DataCriacao")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("Excluido")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Images")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<int>("MarcaId")
                         .HasColumnType("int");

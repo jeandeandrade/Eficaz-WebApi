@@ -178,7 +178,6 @@ namespace Presentation.Controllers
 
         [HttpPost("{userId}/UploadImage")]
         [EnableCors("AllowAll")]
-        [Authorize]
         public async Task<ActionResult<string>> UploadProfilePicture(string userId, IFormFile file)
         {
             if (file == null || file.Length == 0)

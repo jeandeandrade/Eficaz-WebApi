@@ -21,13 +21,15 @@ namespace Core.Models
         public bool Excluido { get; set; }
         public DateTime DataCriacao { get; set; }
         public DateTime DataAtualizacao { get; set; }
+        public List<string?> Images { get; set; }
+
 
 
         public Product()
         {
             DataCriacao = DateTime.Now;
         }
-        public Product(string id, string titulo, string sku, Marca marca, Category categoria, double precoDe, double precoPor, bool produtoDestaque, bool excluido, DateTime dataCriacao, DateTime dataAtualizacao)
+        public Product(string id, string titulo, string sku, Marca marca, Category categoria, double precoDe, double precoPor, bool produtoDestaque, bool excluido, DateTime dataCriacao, DateTime dataAtualizacao, List<string> images)
         {
             Id = id;
             Titulo = titulo;
@@ -42,9 +44,10 @@ namespace Core.Models
             Excluido = excluido;
             DataCriacao = dataCriacao;
             DataAtualizacao = dataAtualizacao;
+            Images = images;
         }
 
-        public Product(string titulo, string sku, Marca marca, Category categoria, double precoDe, double precoPor, bool produtoDestaque, bool excluido, DateTime dataCriacao, DateTime dataAtualizacao)
+        public Product(string titulo, string sku, Marca marca, Category categoria, double precoDe, double precoPor, bool produtoDestaque, bool excluido, DateTime dataCriacao, DateTime dataAtualizacao, List<string> images)
         {
             Titulo = titulo;
             SKU = sku;
@@ -58,6 +61,7 @@ namespace Core.Models
             Excluido = excluido;
             DataCriacao = dataCriacao;
             DataAtualizacao = dataAtualizacao;
+            Images = images;
         }
     }
 }
