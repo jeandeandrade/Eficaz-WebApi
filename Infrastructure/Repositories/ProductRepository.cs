@@ -24,6 +24,11 @@ namespace Infrastructure.Repositories
             return await _context.Product.Include(u => u.Marca).Include(u => u.Categoria).FirstOrDefaultAsync(u => u.Id == id);
         }
 
+        public async Task UpdateProduct()
+        {
+          await _context.SaveChangesAsync();
+        }
+
         public async Task<Product> AddProductAsync(Product product)
         {
             _context.Product.Add(product);

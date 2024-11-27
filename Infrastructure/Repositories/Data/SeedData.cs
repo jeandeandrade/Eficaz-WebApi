@@ -202,7 +202,7 @@ namespace Infrastructure.Repositories.Data
                             },
                             new Product
                             {
-                                Titulo = "Smart Tv 55 4k Quantum Dot Nanocell 55qned7s Hdmi 2.1 LGSmart Tv 55 4k Quantum Dot Nanocell 55qned7s Hdmi 2.1 LG\r\nSmart Tv 55 4k Quantum Dot Nanocell 55qned7s Hdmi 2.1 LG\r\nSmart Tv 55 4k Quantum Dot Nanocell 55qned7s Hdmi 2.1 LG\r\nSmart Tv 55 4k Quantum Dot Nanocell 55qned7s Hdmi 2.1 LG\r\nSmart Tv 55 4k Quantum Dot Nanocell 55qned7s Hdmi 2.1 LG\r\nSmart Tv 55 4k Quantum Dot Nanocell 55qned7s Hdmi 2.1 LG\r\nSmart Tv 55 4k Quantum Dot Nanocell 55qned7s Hdmi 2.1 LG\r\n+3\r\nSmart Tv 55 4k Quantum Dot Nanocell 55qned7s Hdmi 2.1 LG\r\n\r\nAcesse a Loja Oficial de LG\r\n\r\n\r\nNovo  |  +100 vendidos\r\nSmart Tv 55 4k Quantum Dot Nanocell 55qned7s Hdmi 2.1 LG",
+                                Titulo = "Smart Tv 55 4k Quantum Dot Nanocell 55qned7s Hdmi 2.1 LGSmart Tv 55 4k Quantum Dot Nanocell 55qned7s Hdmi 2.1 LG",
                                 SKU = "TV-LED-LG-01",
                                 MarcaId = 2,
                                 CategoriaId = 2,

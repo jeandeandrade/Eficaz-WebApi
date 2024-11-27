@@ -8,10 +8,12 @@ namespace Application.Services
     public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;
+        private readonly IImageService _imageService;
 
-        public ProductService(IProductRepository productRepository)
+        public ProductService(IProductRepository productRepository, IImageService imageService)
         {
             _productRepository = productRepository;
+            _imageService = imageService;
         }
 
         public async Task<Product> GetProductByIdAsync(string id)
@@ -29,6 +31,24 @@ namespace Application.Services
         public async Task<List<Product>> GetAllProductsAsync()
         {
             return await _productRepository.GetAllProductsAsync();
+        }
+
+        public async Task<string> UploadProductImage(string productId, FileData file)
+        {
+            Product product = await GetProductByIdAsync(productId);
+
+            string uploadedFileUrl = await _imageService.UploadImage(file, "products", productId);
+
+            if (product.Images == null)
+            {
+                product.Images = new List<string?>();
+            }
+
+            product.Images.Add(uploadedFileUrl);
+
+            await _productRepository.UpdateProduct();
+
+            return uploadedFileUrl;
         }
 
         public async Task<Product> AddProduct(ProductDTO productDTO)

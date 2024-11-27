@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Eficaz_WebApi.Migrations
 {
     [DbContext(typeof(EficazDbContext))]
-    [Migration("20241127071250_firstMigration")]
-    partial class firstMigration
+    [Migration("20241127191439_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
