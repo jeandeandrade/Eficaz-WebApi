@@ -4,6 +4,8 @@ using Core.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.EntityFrameworkCore;
+using Infrastructure.Repositories.Data;
 
 namespace Presentation.Controllers
 {
@@ -13,11 +15,13 @@ namespace Presentation.Controllers
     {
         private readonly IUserService _userService;
         private readonly IAuthService _authService;
+        private readonly EficazDbContext _context;
 
-        public UserController(IUserService userService, IAuthService authService)
+        public UserController(IUserService userService, IAuthService authService, EficazDbContext context)
         {
             _userService = userService;
             _authService = authService;
+            _context = context;
         }
 
         [HttpGet]
@@ -50,7 +54,6 @@ namespace Presentation.Controllers
                 return BadRequest("User data is required.");
             }
 
-            // Inicializar a variável user
             User user = new User
             {
                 Nome = userDto.Nome,
@@ -74,7 +77,6 @@ namespace Presentation.Controllers
 
             try
             {
-                // Adicionar usuário e associar endereços
                 User newUser = await _userService.AddUser(user);
 
                 if (newUser.Enderecos != null)
@@ -85,6 +87,14 @@ namespace Presentation.Controllers
                     }
                 }
 
+                // Verificar se o usuário foi salvo
+                var savedUser = await _context.Users.FindAsync(newUser.Id);
+                if (savedUser == null)
+                {
+                    return StatusCode(500, "Erro ao salvar o usuário.");
+                }
+
+                // Retorno correto de CreatedAtActionResult
                 return CreatedAtAction(nameof(GetUser), new { id = newUser.Id }, newUser);
             }
             catch (Exception ex)
@@ -92,6 +102,7 @@ namespace Presentation.Controllers
                 return StatusCode(500, $"Ocorreu um erro ao salvar os dados: {ex.Message}");
             }
         }
+
 
         [HttpPut]
         [EnableCors("AllowAll")]

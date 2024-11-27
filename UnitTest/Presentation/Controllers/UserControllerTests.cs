@@ -7,6 +7,8 @@ using Xunit;
 using Presentation.Controllers;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
+using Infrastructure.Repositories.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace UnitTests.Presentation.Controllers
 {
@@ -15,12 +17,14 @@ namespace UnitTests.Presentation.Controllers
         private readonly UserController _controller;
         private readonly Mock<IUserService> _userServiceMock;
         private readonly Mock<IAuthService> _authServiceMock;
+        private readonly Mock<EficazDbContext> _contextMock;
 
         public UserControllerTests()
         {
             _userServiceMock = new Mock<IUserService>();
             _authServiceMock = new Mock<IAuthService>();
-            _controller = new UserController(_userServiceMock.Object, _authServiceMock.Object);
+            _contextMock = new Mock<EficazDbContext>(new DbContextOptions<EficazDbContext>());
+            _controller = new UserController(_userServiceMock.Object, _authServiceMock.Object, _contextMock.Object);
 
             var userClaims = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
             {
@@ -61,7 +65,7 @@ namespace UnitTests.Presentation.Controllers
                 DataNascimento = DateTime.Now,
                 Genero = "genero",
                 Telefone = "telefone",
-                enderecos = new List<AddressDTO>()
+                Enderecos = new List<AddressDTO>()
             };
             var user = new User
             {
@@ -72,7 +76,7 @@ namespace UnitTests.Presentation.Controllers
                 DataNascimento = DateTime.Now,
                 Genero = "genero",
                 Telefone = "telefone",
-                Addresses = new List<Address>()
+                Enderecos = new List<Address>()
             };
             _userServiceMock.Setup(service => service.AddUser(It.IsAny<User>())).ReturnsAsync(user);
 
@@ -96,7 +100,7 @@ namespace UnitTests.Presentation.Controllers
                 DataNascimento = DateTime.Now,
                 Genero = "genero",
                 Telefone = "telefone",
-                enderecos = new List<AddressDTO>()
+                Enderecos = new List<AddressDTO>()
             };
             var user = new User
             {
@@ -108,7 +112,7 @@ namespace UnitTests.Presentation.Controllers
                 DataNascimento = DateTime.Now,
                 Genero = "genero",
                 Telefone = "telefone",
-                Addresses = new List<Address>()
+                Enderecos = new List<Address>()
             };
             _userServiceMock.Setup(service => service.UpdateUser(userId, It.IsAny<User>())).ReturnsAsync(user);
 

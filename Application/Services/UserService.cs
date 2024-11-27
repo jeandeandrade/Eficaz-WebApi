@@ -34,6 +34,11 @@ namespace Application.Services
                 throw new ArgumentNullException(nameof(user));
             }
 
+            if (!IsValidCpf(user.Cpf))
+            {
+                throw new ArgumentException("Cpf inválido");
+            }
+
             user.Id = Guid.NewGuid().ToString();
             await _userRepository.AddUserAsync(user);
 
@@ -45,6 +50,11 @@ namespace Application.Services
             if (user == null || string.IsNullOrEmpty(id))
             {
                 throw new ArgumentNullException("User ou User Id não pode ser nulo");
+            }
+
+            if (!IsValidCpf(user.Cpf))
+            {
+                throw new ArgumentException("Cpf inválido");
             }
 
             var existingUser = await _userRepository.GetUserByIdAsync(id);
@@ -86,6 +96,7 @@ namespace Application.Services
             return true;
         }
 
+
         public async Task<User> GetUserById(string userId)
         {
             var user = await _userRepository.GetUserByIdAsync(userId);
@@ -104,6 +115,52 @@ namespace Application.Services
             return uploadedFileUrl;
         }
 
+        private bool IsValidCpf(string cpf)
+        {
+            if (string.IsNullOrEmpty(cpf))
+            {
+                throw new ArgumentNullException(nameof(cpf), "CPF não pode ser nulo ou vazio.");
+            }
 
+            cpf = cpf.Replace(".", "").Replace("-", "");
+
+            if (cpf.Length != 11)
+            {
+                return false;
+            }
+
+            int[] multiplicador1 = new int[9] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+            int[] multiplicador2 = new int[10] { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+
+            int soma1 = 0;
+
+            for (int i = 0; i < 9; i++)
+            {
+                soma1 += int.Parse(cpf[i].ToString()) * multiplicador1[i];
+            }
+
+            int resto1 = soma1 % 11;
+            int digitoVerificador1 = (resto1 < 2) ? 0 : 11 - resto1;
+
+            int soma2 = 0;
+
+            for (int j = 0; j < 10; j++)
+            {
+                soma2 += int.Parse(cpf[j].ToString()) * multiplicador2[j];
+            }
+
+            int resto2 = soma2 % 11;
+            int digitoVerificador2 = (resto2 < 2) ? 0 : 11 - resto2;
+
+            if (cpf[9].ToString() == digitoVerificador1.ToString() && cpf[10].ToString() == digitoVerificador2.ToString())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
+
