@@ -11,6 +11,7 @@ namespace Core.Models
         public string Telefone { get; set; }
         public string Email { get; set; }
         public string Senha { get; set; }
+        public string? ImageUrl { get; set; }
         public List<Address> Enderecos { get; set; }
 
         public User()

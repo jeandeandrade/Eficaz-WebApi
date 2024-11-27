@@ -75,5 +75,10 @@ namespace Infrastructure.Repositories
 
             return true;
         }
+
+        public async Task UploadImage()
+        {
+            await _context.SaveChangesAsync();
+        }
     }
 }
