@@ -27,6 +27,7 @@ namespace Infrastructure.Repositories.Data
                             Telefone = "11987654321",
                             Email = "maria.silva@example.com",
                             Senha = "senha123",
+                            ImageUrl = "",
                             Enderecos = new List<Address>
                             {
                                 new Address
@@ -52,6 +53,7 @@ namespace Infrastructure.Repositories.Data
                             Telefone = "21912345678",
                             Email = "joao.souza@example.com",
                             Senha = "senha123",
+                            ImageUrl = "",
                             Enderecos = new List<Address>
                             {
                                 new Address

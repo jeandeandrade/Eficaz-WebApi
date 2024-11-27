@@ -164,5 +164,27 @@ namespace Presentation.Controllers
                 return StatusCode(500, $"Ocorreu um erro ao deletar o usuário: {ex.Message}");
             }
         }
+
+        [HttpPost("{userId}/UploadImage")]
+        [EnableCors("AllowAll")]
+        [Authorize]
+        public async Task<ActionResult<string>> UploadProfilePicture(string userId, IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("No image found");
+            }
+            using var memoryStream = new MemoryStream();
+            await file.CopyToAsync(memoryStream);
+            var fileData = new FileData
+            {
+                FileName = file.FileName,
+                Content = memoryStream.ToArray(),
+                ContentType = file.ContentType,
+                Extension = Path.GetExtension(file.FileName),
+            };
+            string imageUrl = await _userService.UploadProfilePicture(userId, fileData);
+            return CreatedAtAction(nameof(UploadProfilePicture), new { userId = userId }, imageUrl);
+        }
     }
 }
