@@ -10,6 +10,7 @@ namespace Core.Models
     {
         public string Id { get; set; }
         public string Titulo { get; set; }
+        public string Descricao { get; set; }
         public string SKU { get; set; }
         public Marca Marca { get; set; }
         public int MarcaId { get; set; }
@@ -29,10 +30,11 @@ namespace Core.Models
         {
             DataCriacao = DateTime.Now;
         }
-        public Product(string id, string titulo, string sku, Marca marca, Category categoria, double precoDe, double precoPor, bool produtoDestaque, bool excluido, DateTime dataCriacao, DateTime dataAtualizacao, List<string> images)
+        public Product(string id, string titulo, string descricao, string sku, Marca marca, Category categoria, double precoDe, double precoPor, bool produtoDestaque, bool excluido, DateTime dataCriacao, DateTime dataAtualizacao, List<string> images)
         {
             Id = id;
             Titulo = titulo;
+            Descricao = descricao;
             SKU = sku;
             Marca = marca;
             MarcaId = marca.Id;
@@ -47,9 +49,10 @@ namespace Core.Models
             Images = images;
         }
 
-        public Product(string titulo, string sku, Marca marca, Category categoria, double precoDe, double precoPor, bool produtoDestaque, bool excluido, DateTime dataCriacao, DateTime dataAtualizacao, List<string> images)
+        public Product(string titulo, string descricao, string sku, Marca marca, Category categoria, double precoDe, double precoPor, bool produtoDestaque, bool excluido, DateTime dataCriacao, DateTime dataAtualizacao, List<string> images)
         {
             Titulo = titulo;
+            Descricao = descricao;
             SKU = sku;
             Marca = marca;
             MarcaId = marca.Id;

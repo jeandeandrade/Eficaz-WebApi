@@ -98,6 +98,8 @@ namespace Eficaz_WebApi.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Titulo = table.Column<string>(type: "longtext", nullable: false, collation: "utf8mb4_general_ci")
                         .Annotation("MySql:CharSet", "utf8mb4"),
+                    Descricao = table.Column<string>(type: "longtext", nullable: false, collation: "utf8mb4_general_ci")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     SKU = table.Column<string>(type: "longtext", nullable: false, collation: "utf8mb4_general_ci")
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     MarcaId = table.Column<int>(type: "int", nullable: false),

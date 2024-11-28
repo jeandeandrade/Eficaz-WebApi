@@ -143,6 +143,10 @@ namespace Eficaz_WebApi.Migrations
                     b.Property<DateTime>("DataCriacao")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<bool>("Excluido")
                         .HasColumnType("tinyint(1)");
 

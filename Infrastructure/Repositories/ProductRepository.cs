@@ -47,6 +47,7 @@ namespace Infrastructure.Repositories
             }
 
             existingProduct.Titulo = product.Titulo;
+            existingProduct.Descricao = product.Descricao;
             existingProduct.SKU = product.SKU;
             existingProduct.PrecoPor = product.PrecoPor;
             existingProduct.DataCriacao = product.DataCriacao;
@@ -62,8 +63,7 @@ namespace Infrastructure.Repositories
 
         public async Task<List<Product>> GetAllProductsAsync()
         {
-            var listProducts = _context.Product.ToList();
-
+            var listProducts = await _context.Product.Include(u => u.Marca).Include(u => u.Categoria).ToListAsync();
             return listProducts;
         }
 

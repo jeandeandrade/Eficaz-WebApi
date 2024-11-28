@@ -63,6 +63,7 @@ namespace Application.Services
                Id = Guid.NewGuid().ToString(),
                 DataCriacao = DateTime.Now,
                 Titulo = productDTO.Titulo,
+                Descricao = productDTO.Descricao,
                 SKU = productDTO.SKU,
                 PrecoPor = productDTO.PrecoPor,
                 CategoriaId = productDTO.CategoriaId,
@@ -89,6 +90,7 @@ namespace Application.Services
             }
 
             existingProduct.Titulo = productDTO.Titulo;
+            existingProduct.Descricao = productDTO.Descricao;
             existingProduct.SKU = productDTO.SKU;
             existingProduct.PrecoPor = productDTO.PrecoPor;
             existingProduct.DataCriacao = productDTO.DataCriacao;

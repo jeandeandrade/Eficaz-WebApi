@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Eficaz_WebApi.Migrations
 {
     [DbContext(typeof(EficazDbContext))]
-    [Migration("20241127191439_InitialMigration")]
+    [Migration("20241127225449_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -145,6 +145,10 @@ namespace Eficaz_WebApi.Migrations
 
                     b.Property<DateTime>("DataCriacao")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<bool>("Excluido")
                         .HasColumnType("tinyint(1)");

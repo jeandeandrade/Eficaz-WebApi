@@ -9,6 +9,8 @@ namespace Core.DTOs
     public class ProductDTO
     {
         public string Titulo { get; set; }
+
+        public string Descricao { get; set; }
         public string SKU { get; set; }
         public int MarcaId { get; set; }
         public int CategoriaId { get; set; }
