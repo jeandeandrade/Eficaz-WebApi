@@ -48,15 +48,9 @@ namespace Presentation.Controllers
 
         [HttpGet]
         [EnableCors("AllowAll")]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<ActionResult<List<Product>>> GetAllProducts()
         {
-            var userId = _authService.GetAuthenticatedUserId(User);
-            if (string.IsNullOrEmpty(userId))
-            {
-                return Unauthorized();
-            }
-
             List<Product> products = await _productService.GetAllProductsAsync();
             
             if (products == null || !products.Any()) 
@@ -89,6 +83,36 @@ namespace Presentation.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, $"Ocorreu um erro ao salvar os dados: {ex.Message}");
+            }
+        }
+
+        [HttpPost("{ProductId}/UploadImage")]
+        public async Task<ActionResult<string>> UploadImage(string ProductId, IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("No image found");
+            }
+
+            using var memoryStream = new MemoryStream();
+            await file.CopyToAsync(memoryStream);
+
+            var fileData = new FileData
+            {
+                FileName = file.FileName,
+                Content = memoryStream.ToArray(),
+                ContentType = file.ContentType,
+                Extension = Path.GetExtension(file.FileName),
+            };
+
+            try
+            {
+                string imageUrl = await _productService.UploadProductImage(ProductId, fileData);
+                return CreatedAtAction(nameof(UploadImage), imageUrl);
+            }
+            catch (ArgumentException ex)
+            {
+                return NotFound(ex.Message); 
             }
         }
 

@@ -185,6 +185,7 @@ namespace Infrastructure.Repositories.Data
                             new Product
                             {
                                 Titulo = "Smartphone Galaxy S24 Ultra",
+                                Descricao = "Smartphone da Gabini",
                                 SKU = "SM-GALAXY-01",
                                 MarcaId = 1,
                                 CategoriaId = 1,
@@ -202,7 +203,8 @@ namespace Infrastructure.Repositories.Data
                             },
                             new Product
                             {
-                                Titulo = "Smart Tv 55 4k Quantum Dot Nanocell 55qned7s Hdmi 2.1 LGSmart Tv 55 4k Quantum Dot Nanocell 55qned7s Hdmi 2.1 LG\r\nSmart Tv 55 4k Quantum Dot Nanocell 55qned7s Hdmi 2.1 LG\r\nSmart Tv 55 4k Quantum Dot Nanocell 55qned7s Hdmi 2.1 LG\r\nSmart Tv 55 4k Quantum Dot Nanocell 55qned7s Hdmi 2.1 LG\r\nSmart Tv 55 4k Quantum Dot Nanocell 55qned7s Hdmi 2.1 LG\r\nSmart Tv 55 4k Quantum Dot Nanocell 55qned7s Hdmi 2.1 LG\r\nSmart Tv 55 4k Quantum Dot Nanocell 55qned7s Hdmi 2.1 LG\r\n+3\r\nSmart Tv 55 4k Quantum Dot Nanocell 55qned7s Hdmi 2.1 LG\r\n\r\nAcesse a Loja Oficial de LG\r\n\r\n\r\nNovo  |  +100 vendidos\r\nSmart Tv 55 4k Quantum Dot Nanocell 55qned7s Hdmi 2.1 LG",
+                                Titulo = "Smart Tv 55 4k Quantum Dot Nanocell 55qned7s Hdmi 2.1 LGSmart Tv 55 4k Quantum Dot Nanocell 55qned7s Hdmi 2.1 LG",
+                                Descricao = "Smart Tv da Gabini",
                                 SKU = "TV-LED-LG-01",
                                 MarcaId = 2,
                                 CategoriaId = 2,
@@ -221,6 +223,7 @@ namespace Infrastructure.Repositories.Data
                             new Product
                             {
                                 Titulo = "Tenis Unissex Air Sb Dunk Low Pro Chlorophyll Couro Original",
+                                Descricao = "Tenis da Gabini",
                                 SKU = "TENIS-NIKE-AIR-01",
                                 MarcaId = 3,
                                 CategoriaId = 3,
@@ -239,6 +242,7 @@ namespace Infrastructure.Repositories.Data
                             new Product
                             {
                                 Titulo = "Camiseta Adidas",
+                                Descricao = "Camiseta da Gabini",
                                 SKU = "CAM-ADIDAS-01",
                                 MarcaId = 4,
                                 CategoriaId = 3,
@@ -258,6 +262,7 @@ namespace Infrastructure.Repositories.Data
                             new Product
                             {
                                 Titulo = "Notebook Dell Inspiron",
+                                Descricao = "Notebook da Gabini",
                                 SKU = "NOTE-DELL-01",
                                 MarcaId = 2,
                                 CategoriaId = 1,
@@ -276,6 +281,7 @@ namespace Infrastructure.Repositories.Data
                             new Product
                             {
                                 Titulo = "Fone De Ouvido Wave Buds Sem Fio Preto Jbl",
+                                Descricao = "Fone De Ouvido da Gabini",
                                 SKU = "FONE-JBL-01",
                                 MarcaId = 3,
                                 CategoriaId = 2,
@@ -294,6 +300,7 @@ namespace Infrastructure.Repositories.Data
                             new Product
                             {
                                 Titulo = "Smartwatch Amazfit GTR Mini Misty Pink, Linha Fashion, Resistente à Água, GPS, Bluetooth, Silicone",
+                                Descricao = "Smartwatch da Gabini",
                                 SKU = "RELOGIO-SMART-01",
                                 MarcaId = 4,
                                 CategoriaId = 4,
@@ -312,6 +319,7 @@ namespace Infrastructure.Repositories.Data
                             new Product
                             {
                                 Titulo = "Mouse Gamer Logitech G403 HERO Sensor Hero 25K",
+                                Descricao = "Mouse Gamer da Gabini",
                                 SKU = "MOUSE-GAMER-01",
                                 MarcaId = 4,
                                 CategoriaId = 1,

@@ -8,10 +8,12 @@ namespace Application.Services
     public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;
+        private readonly IImageService _imageService;
 
-        public ProductService(IProductRepository productRepository)
+        public ProductService(IProductRepository productRepository, IImageService imageService)
         {
             _productRepository = productRepository;
+            _imageService = imageService;
         }
 
         public async Task<Product> GetProductByIdAsync(string id)
@@ -31,6 +33,24 @@ namespace Application.Services
             return await _productRepository.GetAllProductsAsync();
         }
 
+        public async Task<string> UploadProductImage(string productId, FileData file)
+        {
+            Product product = await GetProductByIdAsync(productId);
+
+            string uploadedFileUrl = await _imageService.UploadImage(file, "products", productId);
+
+            if (product.Images == null)
+            {
+                product.Images = new List<string?>();
+            }
+
+            product.Images.Add(uploadedFileUrl);
+
+            await _productRepository.UpdateProduct();
+
+            return uploadedFileUrl;
+        }
+
         public async Task<Product> AddProduct(ProductDTO productDTO)
         {
             if (productDTO == null)
@@ -43,6 +63,7 @@ namespace Application.Services
                Id = Guid.NewGuid().ToString(),
                 DataCriacao = DateTime.Now,
                 Titulo = productDTO.Titulo,
+                Descricao = productDTO.Descricao,
                 SKU = productDTO.SKU,
                 PrecoPor = productDTO.PrecoPor,
                 CategoriaId = productDTO.CategoriaId,
@@ -69,6 +90,7 @@ namespace Application.Services
             }
 
             existingProduct.Titulo = productDTO.Titulo;
+            existingProduct.Descricao = productDTO.Descricao;
             existingProduct.SKU = productDTO.SKU;
             existingProduct.PrecoPor = productDTO.PrecoPor;
             existingProduct.DataCriacao = productDTO.DataCriacao;
