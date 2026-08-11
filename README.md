@@ -21,5 +21,3 @@ The project is organized into:
 - xUnit
 
 ## Running locally
-
-...
